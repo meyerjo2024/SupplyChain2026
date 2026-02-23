@@ -1,0 +1,16 @@
+{
+  "name": "supplychain2026",
+  "version": "1.0.0",
+  "description": "Medical Supply Chain & Logistics Platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "better-sqlite3": "^12.6.2",
+    "cors": "^2.8.5",
+    "morgan": "^1.10.0"
+  }
+}
