@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MedChain 2026 - Supply Chain Platform</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════ SIDEBAR ═══════════════════════ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-icon">🏥</span>
+      <span class="logo-text">MedChain 2026</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-section="dashboard" onclick="showSection('dashboard')">
+        <i class="fas fa-tachometer-alt"></i><span>Dashboard</span>
+      </a>
+      <a href="#" class="nav-item" data-section="equipment" onclick="showSection('equipment')">
+        <i class="fas fa-stethoscope"></i><span>Equipment</span>
+      </a>
+      <a href="#" class="nav-item" data-section="vehicles" onclick="showSection('vehicles')">
+        <i class="fas fa-ambulance"></i><span>Fleet</span>
+      </a>
+      <a href="#" class="nav-item" data-section="approvals" onclick="showSection('approvals')">
+        <i class="fas fa-clipboard-check"></i><span>Approvals</span>
+      </a>
+      <a href="#" class="nav-item" data-section="staff" onclick="showSection('staff')">
+        <i class="fas fa-users"></i><span>Staff</span>
+      </a>
+      <a href="#" class="nav-item" data-section="shifts" onclick="showSection('shifts')">
+        <i class="fas fa-calendar-alt"></i><span>Shifts</span>
+      </a>
+      <a href="#" class="nav-item" data-section="stockaudit" onclick="showSection('stockaudit')">
+        <i class="fas fa-boxes"></i><span>Stock Audit</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <span><i class="fas fa-circle text-success"></i> System Online</span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════════ MAIN CONTENT ═══════════════════════ -->
+  <main class="main-content" id="mainContent">
+
+    <!-- Top bar -->
+    <header class="topbar">
+      <button class="sidebar-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+      <div class="topbar-title" id="topbarTitle">Dashboard</div>
+      <div class="topbar-right">
+        <span class="topbar-user"><i class="fas fa-user-md"></i> Admin</span>
+      </div>
+    </header>
+
+    <!-- ── DASHBOARD ── -->
+    <section id="section-dashboard" class="content-section active">
+      <div class="page-header">
+        <h1><i class="fas fa-tachometer-alt"></i> Dashboard</h1>
+        <p class="page-subtitle">Medical Supply Chain Overview</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card stat-blue">
+          <div class="stat-icon"><i class="fas fa-stethoscope"></i></div>
+          <div class="stat-body">
+            <div class="stat-value" id="stat-equipment">—</div>
+            <div class="stat-label">Total Equipment</div>
+          </div>
+        </div>
+        <div class="stat-card stat-green">
+          <div class="stat-icon"><i class="fas fa-ambulance"></i></div>
+          <div class="stat-body">
+            <div class="stat-value" id="stat-vehicles">—</div>
+            <div class="stat-label">Active Vehicles</div>
+          </div>
+        </div>
+        <div class="stat-card stat-yellow">
+          <div class="stat-icon"><i class="fas fa-clipboard-check"></i></div>
+          <div class="stat-body">
+            <div class="stat-value" id="stat-approvals">—</div>
+            <div class="stat-label">Pending Approvals</div>
+          </div>
+        </div>
+        <div class="stat-card stat-purple">
+          <div class="stat-icon"><i class="fas fa-users"></i></div>
+          <div class="stat-body">
+            <div class="stat-value" id="stat-staff">—</div>
+            <div class="stat-label">Total Staff</div>
+          </div>
+        </div>
+        <div class="stat-card stat-orange">
+          <div class="stat-icon"><i class="fas fa-boxes"></i></div>
+          <div class="stat-body">
+            <div class="stat-value" id="stat-audits">—</div>
+            <div class="stat-label">Ongoing Audits</div>
+          </div>
+        </div>
+        <div class="stat-card stat-teal">
+          <div class="stat-icon"><i class="fas fa-truck-medical"></i></div>
+          <div class="stat-body">
+            <div class="stat-value" id="stat-total-vehicles">—</div>
+            <div class="stat-label">Total Fleet</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="card">
+          <div class="card-header">
+            <h3><i class="fas fa-ambulance"></i> Fleet Status</h3>
+          </div>
+          <div class="card-body" id="dash-vehicles">
+            <div class="loading">Loading…</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h3><i class="fas fa-clipboard-check"></i> Recent Approvals</h3>
+          </div>
+          <div class="card-body" id="dash-approvals">
+            <div class="loading">Loading…</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h3><i class="fas fa-calendar-alt"></i> Today's Shifts</h3>
+          </div>
+          <div class="card-body" id="dash-shifts">
+            <div class="loading">Loading…</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h3><i class="fas fa-exclamation-triangle"></i> Equipment Alerts</h3>
+          </div>
+          <div class="card-body" id="dash-alerts">
+            <div class="loading">Loading…</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── EQUIPMENT ── -->
+    <section id="section-equipment" class="content-section">
+      <div class="page-header">
+        <div>
+          <h1><i class="fas fa-stethoscope"></i> Equipment</h1>
+          <p class="page-subtitle">Manage medical devices, consumables & fixed assets</p>
+        </div>
+        <button class="btn btn-primary" onclick="openEquipmentModal()">
+          <i class="fas fa-plus"></i> Add Equipment
+        </button>
+      </div>
+      <div class="card">
+        <div class="card-toolbar">
+          <input type="text" id="equipment-search" class="search-input" placeholder="🔍  Search equipment…" oninput="filterEquipment()">
+          <select id="equipment-filter-cat" class="filter-select" onchange="filterEquipment()">
+            <option value="">All Categories</option>
+            <option value="device">Device</option>
+            <option value="consumable">Consumable</option>
+            <option value="fixed_asset">Fixed Asset</option>
+          </select>
+          <select id="equipment-filter-status" class="filter-select" onchange="filterEquipment()">
+            <option value="">All Statuses</option>
+            <option value="Available">Available</option>
+            <option value="In Use">In Use</option>
+            <option value="Maintenance">Maintenance</option>
+            <option value="Retired">Retired</option>
+          </select>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table" id="equipment-table">
+            <thead>
+              <tr>
+                <th>ID</th><th>Name</th><th>Category</th><th>Serial #</th>
+                <th>Manufacturer</th><th>Location</th><th>Status</th>
+                <th>Qty</th><th>Expiry</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="equipment-tbody">
+              <tr><td colspan="10" class="loading">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── VEHICLES ── -->
+    <section id="section-vehicles" class="content-section">
+      <div class="page-header">
+        <div>
+          <h1><i class="fas fa-ambulance"></i> Fleet Management</h1>
+          <p class="page-subtitle">Monitor and manage ambulance fleet</p>
+        </div>
+        <button class="btn btn-primary" onclick="openVehicleModal()">
+          <i class="fas fa-plus"></i> Add Vehicle
+        </button>
+      </div>
+      <div class="vehicles-grid" id="vehicles-grid">
+        <div class="loading">Loading…</div>
+      </div>
+      <div class="card mt-20">
+        <div class="table-wrapper">
+          <table class="data-table" id="vehicles-table">
+            <thead>
+              <tr>
+                <th>Vehicle ID</th><th>Reg. No.</th><th>Model</th><th>Year</th>
+                <th>Status</th><th>Oxygen</th><th>Fuel</th><th>Last Maintenance</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="vehicles-tbody">
+              <tr><td colspan="9" class="loading">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── APPROVALS ── -->
+    <section id="section-approvals" class="content-section">
+      <div class="page-header">
+        <div>
+          <h1><i class="fas fa-clipboard-check"></i> Approval Requests</h1>
+          <p class="page-subtitle">Procurement & dispatch approval workflow</p>
+        </div>
+        <button class="btn btn-primary" onclick="openApprovalModal()">
+          <i class="fas fa-plus"></i> New Request
+        </button>
+      </div>
+      <div class="card">
+        <div class="card-toolbar">
+          <select id="approvals-filter-status" class="filter-select" onchange="filterApprovals()">
+            <option value="">All Statuses</option>
+            <option value="Pending">Pending</option>
+            <option value="Clinically Approved">Clinically Approved</option>
+            <option value="Fulfilled">Fulfilled</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+          <select id="approvals-filter-type" class="filter-select" onchange="filterApprovals()">
+            <option value="">All Types</option>
+            <option value="Procurement">Procurement</option>
+            <option value="Dispatch">Dispatch</option>
+          </select>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Request ID</th><th>Type</th><th>Item</th><th>Qty</th>
+                <th>Requested By</th><th>Status</th><th>Requested At</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="approvals-tbody">
+              <tr><td colspan="8" class="loading">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── STAFF ── -->
+    <section id="section-staff" class="content-section">
+      <div class="page-header">
+        <div>
+          <h1><i class="fas fa-users"></i> Staff Management</h1>
+          <p class="page-subtitle">Personnel roster and assignments</p>
+        </div>
+        <button class="btn btn-primary" onclick="openStaffModal()">
+          <i class="fas fa-plus"></i> Add Staff
+        </button>
+      </div>
+      <div class="card">
+        <div class="card-toolbar">
+          <input type="text" id="staff-search" class="search-input" placeholder="🔍  Search staff…" oninput="filterStaff()">
+          <select id="staff-filter-role" class="filter-select" onchange="filterStaff()">
+            <option value="">All Roles</option>
+            <option value="Paramedic">Paramedic</option>
+            <option value="Driver">Driver</option>
+            <option value="Inventory Manager">Inventory Manager</option>
+            <option value="Clinical Approver">Clinical Approver</option>
+            <option value="Admin">Admin</option>
+          </select>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Staff ID</th><th>Name</th><th>Role</th><th>Email</th>
+                <th>Phone</th><th>Assigned Vehicle</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="staff-tbody">
+              <tr><td colspan="7" class="loading">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SHIFTS ── -->
+    <section id="section-shifts" class="content-section">
+      <div class="page-header">
+        <div>
+          <h1><i class="fas fa-calendar-alt"></i> Shift Schedule</h1>
+          <p class="page-subtitle">Staff shift planning and management</p>
+        </div>
+        <button class="btn btn-primary" onclick="openShiftModal()">
+          <i class="fas fa-plus"></i> Add Shift
+        </button>
+      </div>
+      <div class="card">
+        <div class="card-toolbar">
+          <select id="shifts-filter-type" class="filter-select" onchange="filterShifts()">
+            <option value="">All Types</option>
+            <option value="Day">Day</option>
+            <option value="Night">Night</option>
+            <option value="On-Call">On-Call</option>
+          </select>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Shift ID</th><th>Staff</th><th>Role</th><th>Vehicle</th>
+                <th>Type</th><th>Start</th><th>End</th><th>Notes</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="shifts-tbody">
+              <tr><td colspan="9" class="loading">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── STOCK AUDIT ── -->
+    <section id="section-stockaudit" class="content-section">
+      <div class="page-header">
+        <div>
+          <h1><i class="fas fa-boxes"></i> Stock Audits</h1>
+          <p class="page-subtitle">Inventory audit management & tracking</p>
+        </div>
+        <button class="btn btn-primary" onclick="openAuditModal()">
+          <i class="fas fa-plus"></i> New Audit
+        </button>
+      </div>
+      <div class="card">
+        <div class="card-toolbar">
+          <select id="audit-filter-status" class="filter-select" onchange="filterAudits()">
+            <option value="">All Statuses</option>
+            <option value="Pending">Pending</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Audit ID</th><th>Name</th><th>Status</th>
+                <th>Items</th><th>Created By</th><th>Created At</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="stockaudit-tbody">
+              <tr><td colspan="7" class="loading">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════ MODAL ═══════════════════════ -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal-dialog" id="modalDialog">
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════ TOAST ═══════════════════════ -->
+  <div id="toast-container"></div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>
