@@ -32,7 +32,10 @@ router.post('/', (req, res) => {
       INSERT INTO equipment (name, category, serial_number, manufacturer, model, location, status, quantity, unit, expiration_date, calibration_due_date, notes, updated_at)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
     `);
-    const info = stmt.run(name, category, serial_number || null, manufacturer || null, model || null, location || null, status || 'Available', quantity || 1, unit || 'unit', expiration_date || null, calibration_due_date || null, notes || null);
+    const params = [name, category, serial_number || null, manufacturer || null, model || null,
+      location || null, status || 'Available', quantity || 1, unit || 'unit',
+      expiration_date || null, calibration_due_date || null, notes || null];
+    const info = stmt.run(...params);
     const created = db.prepare('SELECT * FROM equipment WHERE id = ?').get(info.lastInsertRowid);
     res.status(201).json(created);
   } catch (err) {
@@ -52,7 +55,9 @@ router.put('/:id', (req, res) => {
         location = ?, status = ?, quantity = ?, unit = ?, expiration_date = ?,
         calibration_due_date = ?, notes = ?, updated_at = datetime('now')
       WHERE id = ?
-    `).run(name, category, serial_number || null, manufacturer || null, model || null, location || null, status || 'Available', quantity || 1, unit || 'unit', expiration_date || null, calibration_due_date || null, notes || null, req.params.id);
+    `).run(name, category, serial_number || null, manufacturer || null, model || null,
+      location || null, status || 'Available', quantity || 1, unit || 'unit',
+      expiration_date || null, calibration_due_date || null, notes || null, req.params.id);
     const updated = db.prepare('SELECT * FROM equipment WHERE id = ?').get(req.params.id);
     res.json(updated);
   } catch (err) {

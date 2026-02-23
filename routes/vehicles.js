@@ -32,7 +32,11 @@ router.post('/', (req, res) => {
       INSERT INTO vehicles (vehicle_id, registration_number, model, year, status, driver_id, oxygen_level, fuel_level, last_maintenance, notes, updated_at)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
     `);
-    const info = stmt.run(vehicle_id, registration_number || null, model || null, year || null, status || 'Active', driver_id || null, oxygen_level != null ? oxygen_level : 100, fuel_level != null ? fuel_level : 100, last_maintenance || null, notes || null);
+    const params = [vehicle_id, registration_number || null, model || null, year || null,
+      status || 'Active', driver_id || null,
+      oxygen_level != null ? oxygen_level : 100, fuel_level != null ? fuel_level : 100,
+      last_maintenance || null, notes || null];
+    const info = stmt.run(...params);
     const created = db.prepare('SELECT * FROM vehicles WHERE id = ?').get(info.lastInsertRowid);
     res.status(201).json(created);
   } catch (err) {
@@ -52,7 +56,10 @@ router.put('/:id', (req, res) => {
         driver_id = ?, oxygen_level = ?, fuel_level = ?, last_maintenance = ?,
         notes = ?, updated_at = datetime('now')
       WHERE id = ?
-    `).run(vehicle_id, registration_number || null, model || null, year || null, status || 'Active', driver_id || null, oxygen_level != null ? oxygen_level : 100, fuel_level != null ? fuel_level : 100, last_maintenance || null, notes || null, req.params.id);
+    `).run(vehicle_id, registration_number || null, model || null, year || null,
+      status || 'Active', driver_id || null,
+      oxygen_level != null ? oxygen_level : 100, fuel_level != null ? fuel_level : 100,
+      last_maintenance || null, notes || null, req.params.id);
     const updated = db.prepare('SELECT * FROM vehicles WHERE id = ?').get(req.params.id);
     res.json(updated);
   } catch (err) {
